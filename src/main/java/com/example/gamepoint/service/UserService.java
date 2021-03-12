@@ -1,6 +1,8 @@
 package com.example.gamepoint.service;
 
+import com.example.gamepoint.dto.GameDto;
 import com.example.gamepoint.dto.UserDto;
+import com.example.gamepoint.model.Game;
 import com.example.gamepoint.model.User;
 import com.example.gamepoint.model.UserDetailsImpl;
 import com.example.gamepoint.repository.UserRepository;
@@ -20,6 +22,29 @@ public class UserService {
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Transactional
+    public List<GameDto> getGamesByActualUser(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        User user = userRepository.findByUsername(userDetails.getUsername()).get();
+        return user.getGames().stream()
+                .map(game -> GameDto.builder()
+                        .id(game.getId())
+                        .name(game.getName())
+                        .devName(game.getDeveloper())
+                        .price(game.getPrice())
+                        .imgUrl(game.getImgUrl())
+                        .desc(game.getDescription())
+                        .forRental(game.getForRental() == 1? true : false)
+                        .provider(game.getProvider().getUsername())
+                        .pricePerMonth(game.getPricePerMonth())
+                        .stock(game.getStock())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public List<UserDto> getAllUsers(){

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5 text-white">
+    <div class="d-flex justify-content-between">
+        <h1 class="">Sales of Game: <span th:text="${game.name}"></span></h1>
+    </div>
+    <div class="text-white" th:each="sale: ${sales}">
+        <div class="d-sm-flex justify-content-between mt-2 p-2 bg-steam">
+            <div class="d-sm-flex justify-content-start">
+                <div class="ms-sm-5">
+                    <p>Sale Detail Id: <span th:text="${sale.id}"></span></p>
+                    <p>User Id: <span th:text="${sale.userId}"></span></p>
+                </div>
+                <div class="ms-sm-5">
+                    <p>Username: <span th:text="${sale.user}"></span></p>
+                    <p>Quantity: <span th:text="${sale.quantity}"></span></p>
+                </div>
+                <div class="ms-sm-5">
+                    <p>Total: <span th:text="${sale.total}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

@@ -9,63 +9,69 @@
 <header th:insert="fragments/fragments :: header"></header>
 
 <div class="container mt-5 text-white mb-5">
-    <h1>Add Game</h1>
-    <form th:action="@{/admin/games/add}" method="POST">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <img th:src="@{${game.imgUrl}}" class="img-fluid" th:alt="${game.name}">
+        </div>
+    </div>
+    <h1>Edit Game</h1>
+    <form th:action="@{/profile/game/{id}(id=${game.id})}" method="POST">
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="name" class="form-label">Game Name: </label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <input type="text" class="form-control" id="name" name="name" th:value="${game.name}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="price" class="form-label">Price: </label>
-                    <input type="text" class="form-control" id="price" name="price">
+                    <input type="text" class="form-control" id="price" name="price" th:value="${game.price}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="img">Img: </label>
-                    <input class="form-control" type="text" id="img" name="imgUrl">
+                    <input class="form-control" type="text" id="img" name="imgUrl" th:value="${game.imgUrl}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="devName">Developer: </label>
-                    <input class="form-control" type="text" id="devName" name="devName">
+                    <input class="form-control" type="text" id="devName" name="devName" th:value="${game.devName}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="stock">Stock: </label>
-                    <input class="form-control" type="number" min="1" id="stock" name="stock">
+                    <input class="form-control" type="number" min="1" id="stock" name="stock" th:value="${game.stock}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label for="forRental" >For Rental: </label>
+                    <label for="forRental">For Rental: </label>
                     <select name="forRental" id="forRental" class="form-select">
-                        <option value="true" >Yes</option>
-                        <option value="false">No</option>
+                        <option value="true" th:selected="${game.forRental == true}">Yes</option>
+                        <option value="false" th:selected="${game.forRental == false}">No</option>
                     </select>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="pricePerMonth">Price Per Month: </label>
-                    <input type="text" class="form-control" id="pricePerMonth" name="pricePerMonth">
+                    <input type="text" class="form-control" id="pricePerMonth" name="pricePerMonth" th:value="${game.pricePerMonth}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="desc">Description: </label>
-                    <textarea class="form-control" id="desc" name="desc"></textarea>
+                    <textarea class="form-control" id="desc" name="desc" th:text="${game.desc}"></textarea>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-success">Add game</button>
-        <a class="btn btn-primary" th:href="@{/admin/games}">Go Back</a>
+        <input type="hidden" name="id" th:value="${game.id}">
+        <button type="submit" class="btn btn-success">Edit game</button>
+        <a class="btn btn-primary" th:href="@{/profile}">Go Back</a>
     </form>
 </div>
 

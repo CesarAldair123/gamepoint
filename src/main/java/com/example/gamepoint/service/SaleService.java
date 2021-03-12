@@ -3,6 +3,7 @@ package com.example.gamepoint.service;
 import com.example.gamepoint.dto.SaleDetailsDto;
 import com.example.gamepoint.dto.SaleDto;
 import com.example.gamepoint.model.User;
+import com.example.gamepoint.repository.SaleDetailsRepository;
 import com.example.gamepoint.repository.SaleRepository;
 import com.example.gamepoint.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class SaleService {
 
     private SaleRepository saleRepository;
     private UserRepository userRepository;
+    private SaleDetailsRepository saleDetailsRepository;
 
     @Transactional
     public List<SaleDto> getSalesByUserUsername(String username) {
@@ -66,6 +68,22 @@ public class SaleService {
                                 .gameName(saleDetails.getGame().getName())
                                 .quantity(saleDetails.getQuantity())
                                 .total(saleDetails.getTotal())
+                                .build())
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<SaleDetailsDto> getSaleDetailsByGameId(int gameId){
+        return saleDetailsRepository.findSaleDetailsByGame_Id(gameId)
+                .stream().map(saleDetails ->
+                        SaleDetailsDto.builder()
+                                .id(saleDetails.getId())
+                                .gameImg(saleDetails.getGame().getImgUrl())
+                                .gameName(saleDetails.getGame().getName())
+                                .quantity(saleDetails.getQuantity())
+                                .total(saleDetails.getTotal())
+                                .user(saleDetails.getSale().getUser().getUsername())
+                                .userId(saleDetails.getSale().getUser().getId())
                                 .build())
                 .collect(Collectors.toList());
     }

@@ -11,7 +11,7 @@
 <div class="container mt-5 text-white">
 
     <h1>Profile</h1>
-    <form th:action="@{/saveprofile}" method="POST">
+    <form th:action="@{/profile/update}" method="POST">
         <h3 th:if="${profilemessage}">
             <span th:text="${profilemessage}"></span>
         </h3>
@@ -34,7 +34,7 @@
     </form>
 
     <h2 class="mt-5">Change Password</h2>
-    <form th:action="@{/updatepassword}" method="POST">
+    <form th:action="@{/profile/password}" method="POST">
         <h3 th:if="${passwordmessage}">
             <span th:text="${passwordmessage}"></span>
         </h3>
@@ -61,9 +61,36 @@
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 
-    <h3 class="mt-5">My Orders</h3>
+    <div class=" mt-5 d-flex justify-content-between">
+        <h2 class="">My Games In Sale</h2>
+        <div>
+            <a class="btn btn-success" th:href="@{/profile/game/add}">Put Game In Sale</a>
+        </div>
+    </div>
+    <div class="text-white" th:each="game: ${games}">
+        <div class="d-md-flex justify-content-between mt-2 p-2 bg-steam">
+            <div class="d-sm-flex justify-content-start">
+                <img th:src="@{${game.imgUrl}}" class="x80" th:alt="${game.name}">
+                <div class="ms-sm-5">
+                    <p>Name: <span th:text="${game.name}"></span></p>
+                    <p>Price: <span th:text="${game.price}"></span></p>
+                </div>
+                <div class="ms-sm-5">
+                    <p>Developer: <span th:text="${game.devName}"></span></p>
+                    <p>Stock: <span th:text="${game.stock}"></span></p>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-primary" th:href="@{/profile/game/{id}(id=${game.id})}">Edit</a>
+                <a class="btn btn-primary" th:href="@{/profile/game/sales/{id}(id=${game.id})}">View Sales</a>
+            </div>
+        </div>
+    </div>
+
+
+    <h3 class="mt-5">My Purchases</h3>
     <div class="list-group mb-5">
-        <a th:each="order: ${orders}" th:href="@{/order/{id}(id=${order.id})}" class="list-group-item list-group-item-action">
+        <a th:each="order: ${orders}" th:href="@{/profile/order/{id}(id=${order.id})}" class="list-group-item list-group-item-action">
             Id:<span th:text="${order.id}"></span>-
             Date:<span th:text="${order.date}"></span>-
             Total Games:<span th:text="${order.totalGames}"></span>-

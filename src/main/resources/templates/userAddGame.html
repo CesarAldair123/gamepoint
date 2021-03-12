@@ -10,7 +10,7 @@
 
 <div class="container mt-5 text-white mb-5">
     <h1>Add Game</h1>
-    <form th:action="@{/admin/games/add}" method="POST">
+    <form th:action="@{/profile/game/add}" method="POST">
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
@@ -65,7 +65,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-success">Add game</button>
-        <a class="btn btn-primary" th:href="@{/admin/games}">Go Back</a>
+        <a class="btn btn-primary" th:href="@{/profile}">Go Back</a>
     </form>
 </div>
 

@@ -15,5 +15,9 @@ public class GameDto {
     private String devName;
     private String desc;
     private String imgUrl;
+    private String provider;
+    private int stock;
+    private boolean forRental;
+    private double pricePerMonth;
     private double price;
 }

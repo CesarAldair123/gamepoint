@@ -1,6 +1,6 @@
 package com.example.gamepoint.controller;
 
-import com.example.gamepoint.dto.GameDto;
+import com.example.gamepoint.dto.Cart;
 import com.example.gamepoint.dto.SaleDto;
 import com.example.gamepoint.dto.UpdateCartRequest;
 import com.example.gamepoint.service.CartService;
@@ -46,6 +46,10 @@ public class CartController {
     @PostMapping("/finish")
     public String postUpdate(HttpSession session, Model model){
         SaleDto saleDto = cartService.finishOrder(session);
+        if(saleDto == null){
+            model.addAttribute("message","Cart changed because some items are already out of stock!");
+            return "/cart";
+        }
         model.addAttribute("order", saleDto);
         model.addAttribute("details",saleService.getSalesDetailsBySaleId(saleDto.getId()));
         return "/order";

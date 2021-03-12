@@ -16,11 +16,12 @@
         <div class="col-sm-9 bg-steam rounded p-3">
             <h1 th:text="${game.name}"></h1>
             <p th:text="${game.desc}"></p>
-            <form th:action="@{/cart/add}" method="POST">
+            <p>Stock: <span th:text="${game.stock}"></span></p>
+            <form th:if="${game.stock != 0}"th:action="@{/cart/add}" method="POST">
                 <div class="row">
                     <input type="hidden" name="gameId" th:value="${game.id}">
                     <div class="col-sm-3 col-12">
-                        <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" required>
+                        <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:max="${game.stock}" th:value="0" required>
                     </div>
                     <div class="col-sm-3 col-12">
                         <button type="submit" class="btn btn-primary">Add To Cart</button>

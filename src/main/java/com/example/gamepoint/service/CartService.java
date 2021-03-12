@@ -57,12 +57,13 @@ public class CartService {
 
     @Transactional
     public CartItem getCartItemToUpdate(int gameId, Cart cart){
+        Game game = gameRepository.findById(gameId).get();
         for (CartItem cartItem : cart.getItems()) {
             if (cartItem.getGame().getId() == gameId) {
+                cartItem.setGame(game);
                 return  cartItem;
             }
         }
-        Game game = gameRepository.findById(gameId).get();
         CartItem cartItem = new CartItem();
         cartItem.setGame(game);
         cart.getItems().add(cartItem);
@@ -71,6 +72,7 @@ public class CartService {
 
     @Transactional
     public SaleDto finishOrder(HttpSession session){
+        if(checkOutOfStock(session)) return null;
         Cart cart = (Cart) session.getAttribute("cart");
         UserDetails userDetails = (UserDetails) SecurityContextHolder
                 .getContext()
@@ -84,6 +86,8 @@ public class CartService {
         sale.setTotalGames(cart.getTotalGames());
         sale.setSaleDetails(new ArrayList<>());
         for(CartItem cartItem : cart.getItems()){
+            Game game = gameRepository.findById(cartItem.getGame().getId()).get();
+            game.setStock(game.getStock() - cartItem.getQuantity());
             SaleDetails saleDetails = new SaleDetails();
             saleDetails.setGame(cartItem.getGame());
             saleDetails.setQuantity(cartItem.getQuantity());
@@ -101,4 +105,43 @@ public class CartService {
                 .build();
     }
 
+    @Transactional
+    public boolean checkOutOfStock(HttpSession session){
+        boolean changed = false;
+        Cart cart = ((Cart)session.getAttribute("cart"));
+        List<CartItem> items = cart.getItems();
+        List<CartItem> cartItemsToRemove = new ArrayList<>();
+        for(CartItem item : items){
+            Game game = gameRepository.findById(item.getGame().getId()).get();
+            if(game.getStock() == 0){
+                updateCart(cart,game,item, game.getStock());
+                cartItemsToRemove.add(item);
+                changed = true;
+            }
+            if(item.getQuantity() > game.getStock()){
+                updateCart(cart,game,item, game.getStock());
+                changed = true;
+            }
+        }
+        items.removeAll(cartItemsToRemove);
+        if(cart.getItems().size() == 0){
+            session.removeAttribute("cart");
+        }
+        return changed;
+    }
+
+    public void updateCart(Cart cart, Game game, CartItem cartItem, int quantity){
+        List<CartItem> cartItems = new ArrayList<>();
+        if(quantity == 0){
+            cart.setTotal(cart.getTotal() - cartItem.getTotal());
+            cart.setTotalGames(cart.getTotalGames() - cartItem.getQuantity());
+        }else{
+            cart.setTotal(cart.getTotal() - cartItem.getTotal());
+            cart.setTotalGames(cart.getTotalGames() - cartItem.getQuantity());
+            cartItem.setQuantity(quantity);
+            cartItem.setTotal(game.getPrice() * quantity);
+            cart.setTotal(cart.getTotal() + cartItem.getTotal());
+            cart.setTotalGames(cart.getTotalGames() + cartItem.getQuantity());
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.gamepoint.controller;
 
 import com.example.gamepoint.dto.GameDto;
+import com.example.gamepoint.service.AuthenticationService;
 import com.example.gamepoint.service.CartService;
 import com.example.gamepoint.service.GameService;
 import com.example.gamepoint.service.SearchGameService;
@@ -19,11 +20,15 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
+    private AuthenticationService authenticationService;
     private SearchGameService searchGameService;
     private GameService gameService;
 
     @GetMapping({"/home","/"})
     public String getHome(@RequestParam Optional<String> name, Model model){
+        if(authenticationService.actualUserIsAdmin()){
+            return "/admin";
+        }
         String game = name.orElse("");
         List<GameDto> games = searchGameService.searchGames(game);
         model.addAttribute("games", games);

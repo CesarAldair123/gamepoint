@@ -19,7 +19,7 @@ public class Game {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
     private int id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
     @Column(nullable = false, columnDefinition="TEXT")
     private String description;
@@ -27,10 +27,15 @@ public class Game {
     private String imgUrl;
     @Column(nullable = false)
     private double price;
+    @Column(nullable = false)
+    private String developer;
+    @Column(nullable = false)
+    private int stock;
+    @Column(nullable = false)
+    private int forRental;
+    private double pricePerMonth;
     @ManyToOne
-    private Developer developer;
-    /*@ManyToMany(mappedBy = "games")
-    private List<User> users;*/
+    private User provider;
     @OneToMany(mappedBy = "game")
     private List<SaleDetails> saleDetails;
     @OneToMany(mappedBy = "game")

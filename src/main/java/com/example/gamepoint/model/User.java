@@ -27,13 +27,8 @@ public class User {
     private String password;
     @Column(nullable = false)
     private String role;
-    /*@ManyToMany
-    @JoinTable(
-            name = "user_game",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "game_id") }
-    )
-    private List<Game> games;*/
+    @OneToMany(mappedBy="provider")
+    private List<Game> games;
     @OneToMany(mappedBy = "user")
     private List<Sale> sales;
 }

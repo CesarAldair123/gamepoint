@@ -10,18 +10,19 @@
 
 <div class="container mt-5">
     <h1 class="text-white">Cart</h1>
+    <p th:if="${message}" th:text="${message}" class="text-white"></p>
     <div class="row mt-5">
         <div class="col-sm-8 text-white" th:if="${session.cart}">
 
             <div  th:each="item: ${session.cart.items}" class="d-flex mt-2 p-2 bg-steam">
                 <img th:src="@{${item.game.imgUrl}}" class="x80" th:alt="${item.game.name}">
                 <div class="ms-5">
-                    <p><span th:text="${item.game.name}"></span> - $<span th:text="${item.total}"></span></p>
+                    <p><span th:text="${item.game.name}"></span> - $<span th:text="${item.total}"></span> </p>
                     <form th:action="@{/cart/update}" method="POST">
                         <div class="row">
                             <input type="hidden" name="gameId" th:value="${item.game.id}">
-                            <div class="col-sm-3 col-12">
-                                <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:value="${item.quantity}" required>
+                            <div class="col-sm-6 col-12">
+                                <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:max="${item.game.stock}" th:value="${item.quantity}" required>
                             </div>
                             <div class="col-sm-3 col-12">
                                 <button class="btn btn-primary d-inline">
@@ -57,6 +58,16 @@
 </div>
 
 <div th:replace="fragments/fragments :: footerfiles"></div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script th:if="${message}">
+    Swal.fire({
+        title: 'Warning!',
+        text: 'Cart Changed because some items are already out of stock!',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+    })
+</script>
 </body>
 
 </html>

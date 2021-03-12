@@ -1,11 +1,8 @@
 package com.example.gamepoint.controller;
 
-import com.example.gamepoint.dto.DeveloperDto;
 import com.example.gamepoint.dto.FreeGameCodeDto;
 import com.example.gamepoint.dto.GameDto;
 import com.example.gamepoint.dto.UserDto;
-import com.example.gamepoint.model.FreeGameCode;
-import com.example.gamepoint.service.DeveloperService;
 import com.example.gamepoint.service.FreeGameCodeService;
 import com.example.gamepoint.service.GameService;
 import com.example.gamepoint.service.UserService;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     private GameService gameService;
-    private DeveloperService developerService;
     private UserService userService;
     private FreeGameCodeService freeGameCodeService;
 
@@ -42,7 +38,6 @@ public class AdminController {
     @GetMapping("/games/{id}")
     private String getEditGame(@PathVariable int id, Model model){
         model.addAttribute("game",gameService.getGameById(id));
-        model.addAttribute("devs",developerService.getAllDevelopers());
         return "editGame";
     }
 
@@ -50,21 +45,18 @@ public class AdminController {
     private String postEditGame(GameDto gameDto, Model model){
         gameService.updateGame(gameDto);
         model.addAttribute("game",gameService.getGameById(gameDto.getId()));
-        model.addAttribute("devs",developerService.getAllDevelopers());
         return "editGame";
     }
 
     @GetMapping("/games/add")
     private String getAddGame(Model model){
-        model.addAttribute("devs",developerService.getAllDevelopers());
         return "createGame";
     }
 
     @PostMapping("/games/add")
     private String postAddGame(GameDto gameDto, Model model){
-        gameService.addGame(gameDto);
-        model.addAttribute("game",gameService.getGameByName(gameDto.getName()));
-        model.addAttribute("devs",developerService.getAllDevelopers());
+        int id = gameService.addGame(gameDto);
+        model.addAttribute("game",gameService.getGameById(id));
         return "editGame";
     }
 
@@ -97,37 +89,6 @@ public class AdminController {
         userService.addUser(userDto);
         model.addAttribute("user",userService.getUserByUsername(userDto.getUsername()));
         return "editUser";
-    }
-
-    @GetMapping("/developers")
-    public String getDevelopers(Model model){
-        model.addAttribute("developers",developerService.getAllDevelopers());
-        return "adminDeveloper";
-    }
-
-    @GetMapping("/developers/{id}")
-    public String getEditDeveloper(@PathVariable int id, Model model){
-        model.addAttribute("developer",developerService.getDeveloperById(id));
-        return "editDeveloper";
-    }
-
-    @PostMapping("/developers/{id}")
-    public String postEditDeveloper(DeveloperDto developerDto, Model model){
-        developerService.updateDeveloper(developerDto);
-        model.addAttribute("developer",developerService.getDeveloperById(developerDto.getId()));
-        return "editDeveloper";
-    }
-
-    @GetMapping("/developers/add")
-    public String getAddDeveloper(){
-        return "createDeveloper";
-    }
-
-    @PostMapping("/developers/add")
-    public String postAddDeveloper(DeveloperDto developerDto, Model model){
-        developerService.addDeveloper(developerDto);
-        model.addAttribute("developer",developerService.getDeveloperByUsername(developerDto.getName()));
-        return "editDeveloper";
     }
 
     @GetMapping("/codes")

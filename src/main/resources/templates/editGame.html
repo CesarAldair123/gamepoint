@@ -38,9 +38,28 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="devName">Developer: </label>
-                    <select id="devName" class="form-select" name="devName">
-                        <option th:each="dev: ${devs}" th:value="${dev.name}" th:text="${dev.name}" th:selected="${dev.name == game.devName}"></option>
+                    <input class="form-control" type="text" id="devName" name="devName" th:value="${game.devName}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="stock">Stock: </label>
+                    <input class="form-control" type="number" min="1" id="stock" name="stock" th:value="${game.stock}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="forRental">For Rental: </label>
+                    <select name="forRental" id="forRental" class="form-select">
+                        <option value="true" th:selected="${game.forRental == true}">Yes</option>
+                        <option value="false" th:selected="${game.forRental == false}">No</option>
                     </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="pricePerMonth">Price Per Month: </label>
+                    <input type="text" class="form-control" id="pricePerMonth" name="pricePerMonth" th:value="${game.pricePerMonth}">
                 </div>
             </div>
             <div class="col-md-6">

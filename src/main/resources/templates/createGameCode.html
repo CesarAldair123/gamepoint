@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5 text-white mb-5">
+    <h1>Create Free Game Code</h1>
+    <form th:action="@{/admin/codes/add}" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="game">Game: </label>
+                    <select id="game" class="form-select" name="gameName">
+                        <option th:each="game: ${games}" th:value="${game.name}" th:text="${game.name}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Add Free Game Code</button>
+        <a class="btn btn-primary" th:href="@{/admin/codes}">Go Back</a>
+    </form>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <h1 class="text-white">Administrator Options</h1>
+    <div class="row mt-5">
+        <div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center mt-3">
+            <a class="text-decoration-none" th:href="@{/admin/users}">
+                <div class="card bg-steam p-5" style="width: 18rem;height:100%;">
+                    <img src="img/users.png" class="card-img-top">
+                    <div class="card-body text-white">
+                        <h2 class="card-title text-center">Users</h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center mt-3">
+            <a class="text-decoration-none" th:href="@{/admin/games}">
+                <div class="card bg-steam p-5" style="width: 18rem;height:100%;">
+                    <img src="img/games.png" class="card-img-top">
+                    <div class="card-body text-white">
+                        <h2 class="card-title">Games</h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center mt-3">
+            <a class="text-decoration-none" th:href="@{/admin/developers}">
+                <div class="card bg-steam p-5" style="width: 18rem;height:100%;">
+                    <img src="img/developer.png" class="card-img-top">
+                    <div class="card-body text-white">
+                        <h2 class="card-title">Developers</h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center mt-3">
+            <a class="text-decoration-none" th:href="@{/admin/codes}">
+                <div class="card bg-steam p-5" style="width: 18rem;height:100%;">
+                    <img src="img/freegamecode.png" class="card-img-top">
+                    <div class="card-body text-white">
+                        <h2 class="card-title">Free Game Code</h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

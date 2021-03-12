@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5">
+    <div class="row mt-5 text-white">
+        <div class="col-12 col-sm-3">
+            <img th:src="@{${game.imgUrl}}" th:alt="${game.name}" class="img-fluid">
+        </div>
+        <div class="col-sm-9 bg-steam rounded p-3">
+            <h1 th:text="${game.name}"></h1>
+            <p th:text="${game.desc}"></p>
+            <form th:action="@{/cart/add}" method="POST">
+                <div class="row">
+                    <input type="hidden" name="gameId" th:value="${game.id}">
+                    <div class="col-sm-3 col-12">
+                        <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" required>
+                    </div>
+                    <div class="col-sm-3 col-12">
+                        <button type="submit" class="btn btn-primary">Add To Cart</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+</html>

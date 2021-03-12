@@ -1,0 +1,24 @@
+:root{
+    --void: #0E0B16;
+    --fuschia: #A239CA;
+    --jewel: #4717F6;
+    --stark: #E7DFDD;
+    --steam: #232531;
+}
+
+.bg-steam{
+    background-color: var(--steam);
+}
+
+.bg-void{
+    background-color: var(--void);
+}
+
+.full-height{
+    height: 100vh;
+}
+
+.x80{
+    height: 80px;
+    width: 80px;
+}

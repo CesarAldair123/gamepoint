@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+<div class="container mt-5">
+    <h1 class="text-white">Popular Games</h1>
+    <div class="row mt-2">
+        <div th:each="game: ${games}" class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mt-3">
+            <a class="text-decoration-none" th:href="@{/game/{id}(id=${game.id})}">
+                <div class="card bg-void" style="height:100%;">
+                    <img th:src="@{${game.imgUrl}}" class="card-img-top" height="350px" th:alt="${game.name}">
+                    <div class="card-body bg-steam text-white">
+                        <h5 class="card-title" th:text="${game.name}"></h5>
+                        <p class="card-text">Developer: <span th:text="${game.devName}"></span></p>
+                        <p class="card-text">Price: $<span th:text="${game.price}"></span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

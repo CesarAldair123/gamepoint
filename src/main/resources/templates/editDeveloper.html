@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5 text-white mb-5">
+    <h1>Edit Developer</h1>
+    <form th:action="@{/admin/developers/{id}(id=${developer.id})}" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Developer Name: </label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${developer.name}">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="id" th:value="${developer.id}">
+        <button type="submit" class="btn btn-success">Edit Developer</button>
+        <a class="btn btn-primary" th:href="@{/admin/developers}">Go Back</a>
+    </form>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5">
+    <h1 class="text-white">Cart</h1>
+    <div class="row mt-5">
+        <div class="col-sm-8 text-white" th:if="${session.cart}">
+
+            <div  th:each="item: ${session.cart.items}" class="d-flex mt-2 p-2 bg-steam">
+                <img th:src="@{${item.game.imgUrl}}" class="x80" th:alt="${item.game.name}">
+                <div class="ms-5">
+                    <p><span th:text="${item.game.name}"></span> - $<span th:text="${item.total}"></span></p>
+                    <form th:action="@{/cart/update}" method="POST">
+                        <div class="row">
+                            <input type="hidden" name="gameId" th:value="${item.game.id}">
+                            <div class="col-sm-3 col-12">
+                                <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:value="${item.quantity}" required>
+                            </div>
+                            <div class="col-sm-3 col-12">
+                                <button class="btn btn-primary d-inline">
+                                    Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-8 text-white" th:unless="${session.cart}">
+
+            <div class="mt-2 p-2 bg-steam">
+                <h2>Cart Is Empty!</h2>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4 text-white">
+            <div class="bg-steam p-2 mt-2" th:if="${session.cart}">
+                <p>
+                    Total: <span th:text="${session.cart.total}"></span>
+                </p>
+                <form th:action="@{/cart/finish}" method="POST">
+                    <button class="btn btn-success">Buy</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

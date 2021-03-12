@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:fragment="headerfiles">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GamePoint</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-steam" th:fragment="header">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/home}">GamePoint</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <!--<li>
+                    <a class="nav-link" th:href="@{/mygames}">My Games</a>
+                </li>-->
+                <li>
+                    <a class="nav-link" th:href="@{/profile}">Profile</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" th:href="@{/admin}">Admin</a>
+                </li>
+                <li>
+                    <a class="nav-link" th:href="@{/code}">Change Code</a>
+                </li>
+                <li class="nav-item" th:if="${session.cart}">
+                    <a class="nav-link" th:href="@{/cart}">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span th:text="${session.cart.totalGames}"></span>
+                    </a>
+                </li>
+                <li>
+                    <form th:action="@{/logout}" method="POST">
+                        <button class="btn btn-secondary">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+            <div>
+                <form class="d-flex" th:action="@{/home}" method="GET">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="name">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div th:fragment="footerfiles">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{https://kit.fontawesome.com/958c6beb31.js}" crossorigin="anonymous"></script>
+</div>
+
+</body>
+</html>

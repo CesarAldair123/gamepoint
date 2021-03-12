@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5 text-white">
+    <h1 class="">Order <span th:text="${order.id}"></span></h1>
+    <p>Date: <span th:text="${order.date}"></span></p>
+    <p>Total Games: <span th:text="${order.totalGames}"></span></p>
+    <p>Total: <span th:text="${order.total}"></span></p>
+    <div class="text-white">
+        <div class="d-flex mt-2 p-2 bg-steam" th:each="detail: ${details}">
+            <img th:src="@{${detail.gameImg}}" class="x80 card-img-top" th:alt="${detail.gameName}">
+            <div class="ms-5">
+                <p>Name: <span th:text="${detail.gameName}"></span></span></p>
+                <p>Quantity: <span th:text="${detail.quantity}"></span></p>
+                <p>Total: $<span th:text="${detail.total}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

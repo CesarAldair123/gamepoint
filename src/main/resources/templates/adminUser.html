@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5 text-white">
+    <div class="d-flex justify-content-between">
+        <h1 class="">Users</h1>
+        <div>
+            <a class="btn btn-success" th:href="@{/admin/users/add}">Add User</a>
+        </div>
+    </div>
+    <div class="text-white" th:each="user: ${users}">
+        <div class="d-sm-flex justify-content-between mt-2 p-2 bg-steam">
+            <div class="d-sm-flex justify-content-start">
+                <div class="ms-sm-5">
+                    <p>Id: <span th:text="${user.id}"></span></p>
+                    <p>Username: <span th:text="${user.username}"></span></p>
+                </div>
+                <div class="ms-sm-5">
+                    <p>Role: <span th:text="${user.role}"></span></p>
+                    <p>Email: <span th:text="${user.email}"></span></p>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-primary" th:href="@{/admin/users/{id}(id=${user.id})}">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

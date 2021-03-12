@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+
+<div class="container">
+    <div class="row full-height">
+        <div class="col-md-10 offset-md-1 bg-steam p-5 my-auto rounded">
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="img-fluid" src="img/videojuego.jpeg" alt="Tienda de Videojuegos">
+                </div>
+                <div class="col-md-6 text-white">
+                    <h1>GamePoint</h1>
+                    <div th:if="${message}" th:text="${message}">
+                    </div>
+                    <div th:if="${param.error}">
+                        Invalid username and password.
+                    </div>
+                    <div th:if="${param.logout}">
+                        You have been logged out.
+                    </div>
+                    <form th:action="@{/login}" method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username: </label>
+                            <input type="text" class="form-control" id="username" name="username" aria-describedby="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password: </label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        <input type="submit" value="Login" class="btn btn-primary">
+                        <a href="/signup" class="link-primary d-inline ms-3">I dont have an Account</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5 text-white">
+    <div class="d-flex justify-content-between">
+        <h1 class="">Developers</h1>
+        <div>
+            <a class="btn btn-success" th:href="@{/admin/developers/add}">Add Developer</a>
+        </div>
+    </div>
+    <div class="text-white" th:each="developer: ${developers}">
+        <div class="d-sm-flex justify-content-between mt-2 p-2 bg-steam">
+            <div class="d-sm-flex justify-content-start">
+                <div class="ms-sm-5">
+                    <p>Id: <span th:text="${developer.id}"></span></p>
+                    <p>Username: <span th:text="${developer.name}"></span></p>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-primary" th:href="@{/admin/developers/{id}(id=${developer.id})}">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

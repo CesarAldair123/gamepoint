@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:replace="fragments/fragments :: headerfiles">
+</head>
+
+<body class="bg-void">
+<header th:insert="fragments/fragments :: header"></header>
+
+<div class="container mt-5 text-white mb-5">
+        <div class="row">
+            <div class="col-4 offset-4">
+                <img th:src="@{${game.imgUrl}}" class="img-fluid" th:alt="${game.name}">
+            </div>
+        </div>
+    <h1>Edit Game</h1>
+    <form th:action="@{/admin/games/{id}(id=${game.id})}" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Game Name: </label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${game.name}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price: </label>
+                    <input type="text" class="form-control" id="price" name="price" th:value="${game.price}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="img">Img: </label>
+                    <input class="form-control" type="text" id="img" name="imgUrl" th:value="${game.imgUrl}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="devName">Developer: </label>
+                    <select id="devName" class="form-select" name="devName">
+                        <option th:each="dev: ${devs}" th:value="${dev.name}" th:text="${dev.name}" th:selected="${dev.name == game.devName}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="desc">Description: </label>
+                    <textarea class="form-control" id="desc" name="desc" th:text="${game.desc}"></textarea>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="id" th:value="${game.id}">
+        <button type="submit" class="btn btn-success">Edit game</button>
+        <a class="btn btn-primary" th:href="@{/admin/games}">Go Back</a>
+    </form>
+</div>
+
+<div th:replace="fragments/fragments :: footerfiles"></div>
+</body>
+
+</html>

@@ -8,32 +8,50 @@
 <body class="bg-void">
 <header th:insert="fragments/fragments :: header"></header>
 
-<div class="container mt-5 text-white">
+<div class="container mt-5 mb5">
     <div class="d-flex justify-content-between">
-        <h1 class="">Free Game Code</h1>
+        <h1 class="text-white">Free Game Code</h1>
         <div>
-            <a class="btn btn-success" th:href="@{/admin/codes/add}">Create Code</a>
+            <a class="btn btn-success" th:href="@{/admin/codes/add}">Create Free Game Code</a>
         </div>
     </div>
-    <div class="text-white" th:each="code: ${codes}">
-        <div class="d-sm-flex justify-content-between mt-2 p-2 bg-steam">
-            <div class="d-sm-flex justify-content-start">
-                <div class="ms-sm-5">
-                    <p>Id: <span th:text="${code.id}"></span></p>
-                    <p>Code: <span th:text="${code.code}"></span></p>
-                </div>
-                <div class="ms-sm-5">
-                    <p>Game: <span th:text="${code.gameName}"></span></p>
-                    <p>Used: <span th:if="${code.used}">Yes</span>
-                            <span th:unless="${code.used}">No</span>
-                    </p>
-                </div>
-            </div>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-dark">
+            <theader>
+                <tr>
+                    <th>Img</th>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Game</th>
+                    <th>Used</th>
+                </tr>
+            </theader>
+            <tbody>
+            <tr th:each="code: ${codes}">
+                <td>
+                    <img th:src="@{${code.gameImg}}" class="x40" th:alt="${code.gameName}">
+                </td>
+                <td th:text="${code.id}"></td>
+                <td th:text="${code.code}"></td>
+                <td th:text="${code.gameName}"></td>
+                <td th:text="${code.used ? 'Yes' : 'No'}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
+
 <div th:replace="fragments/fragments :: footerfiles"></div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script th:if="${message == 'Code Created'}">
+    Swal.fire({
+        title: 'Success!',
+        text: 'User Created!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    })
+</script>
 </body>
 
 </html>

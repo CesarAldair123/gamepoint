@@ -14,9 +14,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label for="game">Game: </label>
-                    <select id="game" class="form-select" name="gameName">
-                        <option th:each="game: ${games}" th:value="${game.name}" th:text="${game.name}"></option>
+                    <label for="gameId">Game: </label>
+                    <select id="gameId" class="form-select" name="gameId">
+                        <option th:each="game: ${games}" th:value="${game.id}" th:text="${game.name}"></option>
                     </select>
                 </div>
             </div>

@@ -8,25 +8,29 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Sale {
+public class RentGame {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
     private int id;
     @ManyToOne
-    private User user;
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
-    private List<SaleDetails> saleDetails;
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
-    private List<RentGame> saleRentGames;
-    private Date date;
-    private int totalGames;
+    private Game game;
+    @Column(nullable = false)
+    private Date firstMonth;
+    @Column(nullable = false)
+    private Date lasthMonth;
+    @Column(nullable = false)
     private double total;
+    @Column(nullable = false)
+    private int quantity;
+    @Column(nullable = false)
+    private int wasReturned;
+    @ManyToOne
+    private Sale sale;
 }

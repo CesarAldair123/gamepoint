@@ -2,7 +2,6 @@ package com.example.gamepoint.service;
 
 import com.example.gamepoint.dto.GameDto;
 import com.example.gamepoint.dto.UserDto;
-import com.example.gamepoint.model.Game;
 import com.example.gamepoint.model.User;
 import com.example.gamepoint.model.UserDetailsImpl;
 import com.example.gamepoint.repository.UserRepository;
@@ -38,7 +37,7 @@ public class UserService {
                         .price(game.getPrice())
                         .imgUrl(game.getImgUrl())
                         .desc(game.getDescription())
-                        .forRental(game.getForRental() == 1? true : false)
+                        .forRent(game.getForRent() == 1? true : false)
                         .provider(game.getProvider().getUsername())
                         .pricePerMonth(game.getPricePerMonth())
                         .stock(game.getStock())
@@ -109,5 +108,13 @@ public class UserService {
                 .role(userDto.getRole())
                 .build();
         userRepository.save(user);
+    }
+
+    @Transactional
+    public UserDetailsImpl getActualUser(){
+        return (UserDetailsImpl) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
     }
 }

@@ -14,25 +14,54 @@
     <div class="row mt-5">
         <div class="col-sm-8 text-white" th:if="${session.cart}">
 
-            <div  th:each="item: ${session.cart.items}" class="d-flex mt-2 p-2 bg-steam">
-                <img th:src="@{${item.game.imgUrl}}" class="x80" th:alt="${item.game.name}">
-                <div class="ms-5">
-                    <p><span th:text="${item.game.name}"></span> - $<span th:text="${item.total}"></span> </p>
-                    <form th:action="@{/cart/update}" method="POST">
-                        <div class="row">
-                            <input type="hidden" name="gameId" th:value="${item.game.id}">
-                            <div class="col-sm-6 col-12">
-                                <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:max="${item.game.stock}" th:value="${item.quantity}" required>
+            <div class="mb-4" th:if="${session.cart.items.size > 0}">
+                <h2>Items to purchase</h2>
+                <div  th:each="item: ${session.cart.items}" class="d-flex mt-2 p-2 bg-steam">
+                    <img th:src="@{${item.game.imgUrl}}" class="x80" th:alt="${item.game.name}">
+                    <div class="ms-5">
+                        <p><span th:text="${item.game.name}"></span> - $<span th:text="${item.total}"></span> </p>
+                        <form th:action="@{/cart/update}" method="POST">
+                            <div class="row">
+                                <input type="hidden" name="gameId" th:value="${item.game.id}">
+                                <div class="col-sm-6 col-12">
+                                    <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:max="${item.game.stock}" th:value="${item.quantity}" required>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <button class="btn btn-primary d-inline">
+                                        Update
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-sm-3 col-12">
-                                <button class="btn btn-primary d-inline">
-                                    Update
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
+
+           <div th:if="${session.cart.rentItems.size > 0}">
+               <h2>Items to Rent</h2>
+               <div  th:each="item: ${session.cart.rentItems}" class="d-flex mt-2 p-2 bg-steam">
+                   <img th:src="@{${item.game.imgUrl}}" class="x80" th:alt="${item.game.name}">
+                   <div class="ms-5">
+                       <p><span th:text="${item.game.name}"></span> - $<span th:text="${item.total}"></span> </p>
+                       <form th:action="@{/rent/update}" method="POST">
+                           <div class="row">
+                               <input type="hidden" name="gameId" th:value="${item.game.id}">
+                               <div class="col-sm-5 col-12">
+                                   <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:max="${item.game.stock}" th:value="${item.quantity}" required>
+                               </div>
+                               <div class="col-sm-5 col-12">
+                                   <input id="datefield" type="date" name="finalMonth" placeholder="Select day of return" class="form-control" th:value="${item.dateInString}" required>
+                               </div>
+                               <div class="col-sm-3 col-12 mt-1">
+                                   <button class="btn btn-primary d-inline">
+                                       Update
+                                   </button>
+                               </div>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
 
         </div>
 
@@ -45,12 +74,13 @@
         </div>
 
         <div class="col-sm-4 text-white">
+            <h2>Finish Purchase</h2>
             <div class="bg-steam p-2 mt-2" th:if="${session.cart}">
                 <p>
                     Total: <span th:text="${session.cart.total}"></span>
                 </p>
                 <form th:action="@{/cart/finish}" method="POST">
-                    <button class="btn btn-success">Buy</button>
+                    <button class="btn btn-success">Finish</button>
                 </form>
             </div>
         </div>

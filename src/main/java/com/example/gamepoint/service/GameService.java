@@ -31,7 +31,7 @@ public class GameService{
                         .price(game.getPrice())
                         .imgUrl(game.getImgUrl())
                         .desc(game.getDescription())
-                        .forRental(game.getForRental() == 1? true : false)
+                        .forRent(game.getForRent() == 1? true : false)
                         .provider(game.getProvider().getUsername())
                         .pricePerMonth(game.getPricePerMonth())
                         .stock(game.getStock())
@@ -48,28 +48,12 @@ public class GameService{
                 .price(game.getPrice())
                 .imgUrl(game.getImgUrl())
                 .desc(game.getDescription())
-                .forRental(game.getForRental() == 1? true : false)
+                .forRent(game.getForRent() == 1? true : false)
                 .provider(game.getProvider().getUsername())
                 .pricePerMonth(game.getPricePerMonth())
                 .stock(game.getStock())
                 .build()).get();
     }
-
-    /*@Transactional
-    public GameDto getGameByName(String name){
-        return gameRepository.findGameByName(name).map(game -> GameDto.builder()
-                .id(game.getId())
-                .name(game.getName())
-                .devName(game.getDeveloper())
-                .price(game.getPrice())
-                .imgUrl(game.getImgUrl())
-                .desc(game.getDescription())
-                .forRental(game.getForRental() == 1? true : false)
-                .provider(game.getProvider().getUsername())
-                .pricePerMonth(game.getPricePerMonth())
-                .stock(game.getStock())
-                .build()).get();
-    }*/
 
     @Transactional
     public List<GameDto> getGamesByExpression(String name){
@@ -81,7 +65,7 @@ public class GameService{
                         .price(game.getPrice())
                         .imgUrl(game.getImgUrl())
                         .desc(game.getDescription())
-                        .forRental(game.getForRental() == 1? true : false)
+                        .forRent(game.getForRent() == 1? true : false)
                         .provider(game.getProvider().getUsername())
                         .pricePerMonth(game.getPricePerMonth())
                         .stock(game.getStock())
@@ -99,7 +83,7 @@ public class GameService{
         game.setPrice(gameDto.getPrice());
         game.setImgUrl(gameDto.getImgUrl());
         game.setPricePerMonth(gameDto.getPricePerMonth());
-        game.setForRental(gameDto.isForRental() ? 1 : 0);
+        game.setForRent(gameDto.isForRent() ? 1 : 0);
         game.setStock(gameDto.getStock());
     }
 
@@ -116,7 +100,7 @@ public class GameService{
                 .developer(gameDto.getDevName())
                 .price(gameDto.getPrice())
                 .imgUrl(gameDto.getImgUrl())
-                .forRental(gameDto.isForRental() ? 1 : 0)
+                .forRent(gameDto.isForRent() ? 1 : 0)
                 .pricePerMonth(gameDto.getPricePerMonth())
                 .stock(gameDto.getStock())
                 .provider(user)

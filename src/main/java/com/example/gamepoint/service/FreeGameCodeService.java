@@ -46,6 +46,7 @@ public class FreeGameCodeService {
                 .map(code->FreeGameCodeDto.builder()
                     .id(code.getId())
                     .code(code.getGameCode())
+                        .gameImg(code.getGame().getImgUrl())
                     .gameName(code.getGame().getName())
                     .used(code.getIsUsed() == 0 ? false : true)
                     .build())
@@ -54,13 +55,14 @@ public class FreeGameCodeService {
 
     @Transactional
     public void addGameCode(FreeGameCodeDto freeGameCodeDto){
-        Game game = gameRepository.findGameByName(freeGameCodeDto.getGameName()).get();
+        Game game = gameRepository.findById(freeGameCodeDto.getGameId()).get();
         FreeGameCode freeGameCode = new FreeGameCode();
         freeGameCode.setGameCode(generateRandomCode());
         freeGameCode.setGame(game);
         freeGameCode.setIsUsed(0);
         freeGameCodeRepository.save(freeGameCode);
     }
+
 
     @Transactional
     public FreeGameCodeDto getGameFromGameCode(String gameCode){

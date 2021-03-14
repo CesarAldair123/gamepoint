@@ -6,16 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cart {
-    private List<CartItem> items = new ArrayList<>();
-    private List<CartRentItem> rentItems = new ArrayList<>();
-    private int totalGames;
+public class CartRentItem {
+    private Game game;
+    private int quantity;
+    private Date finalMonth;
+    private String dateInString;
     private double total;
 }

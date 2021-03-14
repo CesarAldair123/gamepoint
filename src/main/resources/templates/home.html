@@ -20,6 +20,7 @@
                         <div class="card-text">Price: $<span th:text="${game.price}"></span></div>
                         <div class="card-text">Stock: <span th:text="${game.stock}"></span></div>
                         <div class="card-text">Provider: <span th:text="${game.provider}"></span></div>
+                        <div th:if="${game.forRent}"class="card-text">Rentable</div>
                     </div>
                 </div>
             </a>

@@ -8,30 +8,38 @@
 <body class="bg-void">
 <header th:insert="fragments/fragments :: header"></header>
 
-<div class="container mt-5 text-white">
+<div class="container mt-5 mb5">
     <div class="d-flex justify-content-between">
-        <h1 class="">Games</h1>
+        <h1 class="text-white">Games</h1>
         <div>
             <a class="btn btn-success" th:href="@{/admin/games/add}">Add Game</a>
         </div>
     </div>
-    <div class="text-white" th:each="game: ${games}">
-        <div class="d-md-flex justify-content-between mt-2 p-2 bg-steam">
-            <div class="d-sm-flex justify-content-start">
-                <img th:src="@{${game.imgUrl}}" class="x80" th:alt="${game.name}">
-                <div class="ms-sm-5">
-                    <p>Name: <span th:text="${game.name}"></span></p>
-                    <p>Price: <span th:text="${game.price}"></span></p>
-                </div>
-                <div class="ms-sm-5">
-                    <p>Developer: <span th:text="${game.devName}"></span></p>
-                    <p>Stock: <span th:text="${game.stock}"></span></p>
-                </div>
-            </div>
-            <div>
-                <a class="btn btn-primary" th:href="@{/admin/games/{id}(id=${game.id})}">Edit</a>
-            </div>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-dark">
+            <theader>
+                <tr>
+                    <th>Img</th>
+                    <th>GameId</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th></th>
+                </tr>
+            </theader>
+            <tbody>
+            <tr th:each="game: ${games}">
+                <td>
+                    <img th:src="@{${game.imgUrl}}" class="x40" th:alt="${game.name}">
+                </td>
+                <td th:text="${game.id}"></td>
+                <td th:text="${game.name}"></td>
+                <td th:text="${game.price}"></td>
+                <td th:text="${game.stock}"></td>
+                <td><a class="btn btn-primary" th:href="@{/admin/games/{id}(id=${game.id})}">Edit</a></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

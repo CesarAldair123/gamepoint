@@ -5,15 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FreeGameCodeDto {
-    private int id;
-    private String code;
+public class RentGameRequest {
+    private int quantity;
     private int gameId;
-    private String gameImg;
-    private String gameName;
-    private boolean used;
+    private String finalMonth;
 }

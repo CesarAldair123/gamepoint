@@ -32,6 +32,15 @@
 </div>
 
 <div th:replace="fragments/fragments :: footerfiles"></div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script th:if="${message}">
+    Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Data!',
+        icon: 'error',
+        confirmButtonText: 'OK'
+    })
+</script>
 </body>
 
 </html>

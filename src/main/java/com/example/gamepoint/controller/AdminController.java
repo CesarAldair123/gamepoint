@@ -45,6 +45,7 @@ public class AdminController {
     private String postEditGame(GameDto gameDto, Model model){
         gameService.updateGame(gameDto);
         model.addAttribute("game",gameService.getGameById(gameDto.getId()));
+        model.addAttribute("message","Game Edited");
         return "editGame";
     }
 
@@ -57,6 +58,7 @@ public class AdminController {
     private String postAddGame(GameDto gameDto, Model model){
         int id = gameService.addGame(gameDto);
         model.addAttribute("game",gameService.getGameById(id));
+        model.addAttribute("message","Game Created");
         return "editGame";
     }
 
@@ -76,6 +78,7 @@ public class AdminController {
     public String postEditUser(UserDto userDto, Model model){
         userService.updateUser(userDto);
         model.addAttribute("user",userService.getUserByUsername(userDto.getUsername()));
+        model.addAttribute("message","User Edited");
         return "editUser";
     }
 
@@ -88,6 +91,7 @@ public class AdminController {
     public String postAddUser(UserDto userDto, Model model){
         userService.addUser(userDto);
         model.addAttribute("user",userService.getUserByUsername(userDto.getUsername()));
+        model.addAttribute("message","User Created");
         return "editUser";
     }
 
@@ -107,6 +111,7 @@ public class AdminController {
     public String postAddCode(FreeGameCodeDto freeGameCodeDto, Model model){
         freeGameCodeService.addGameCode(freeGameCodeDto);
         model.addAttribute("codes",freeGameCodeService.getAllGameCodes());
+        model.addAttribute("message","Code Created");
         return "adminGameCode";
     }
 }

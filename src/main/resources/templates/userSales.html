@@ -8,26 +8,29 @@
 <body class="bg-void">
 <header th:insert="fragments/fragments :: header"></header>
 
-<div class="container mt-5 text-white">
-    <div class="d-flex justify-content-between">
-        <h1 class="">Sales of Game: <span th:text="${game.name}"></span></h1>
-    </div>
-    <div class="text-white" th:each="sale: ${sales}">
-        <div class="d-sm-flex justify-content-between mt-2 p-2 bg-steam">
-            <div class="d-sm-flex justify-content-start">
-                <div class="ms-sm-5">
-                    <p>Sale Detail Id: <span th:text="${sale.id}"></span></p>
-                    <p>User Id: <span th:text="${sale.userId}"></span></p>
-                </div>
-                <div class="ms-sm-5">
-                    <p>Username: <span th:text="${sale.user}"></span></p>
-                    <p>Quantity: <span th:text="${sale.quantity}"></span></p>
-                </div>
-                <div class="ms-sm-5">
-                    <p>Total: <span th:text="${sale.total}"></span></p>
-                </div>
-            </div>
-        </div>
+<div class="container mt-5 mb5">
+    <h1 class="text-white">Sales Of Game: <span th:text="${game.name}"></span></h1>
+    <div class="table-responsive">
+        <table class="table table-dark">
+            <theader>
+                <tr>
+                    <th>SaleDetailsId</th>
+                    <th>UserId</th>
+                    <th>Username</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </theader>
+            <tbody>
+                <tr th:each="sale: ${sales}">
+                    <td th:text="${sale.id}"></td>
+                    <td th:text="${sale.userId}"></td>
+                    <td th:text="${sale.getUsername}"></td>
+                    <td th:text="${sale.quantity}"></td>
+                    <td th:text="${sale.total}"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

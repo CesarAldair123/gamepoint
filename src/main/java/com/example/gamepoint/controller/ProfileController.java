@@ -4,10 +4,7 @@ import com.example.gamepoint.dto.GameDto;
 import com.example.gamepoint.dto.UpdatePasswordRequest;
 import com.example.gamepoint.dto.UserDto;
 import com.example.gamepoint.model.Game;
-import com.example.gamepoint.service.GameService;
-import com.example.gamepoint.service.ProfileService;
-import com.example.gamepoint.service.SaleService;
-import com.example.gamepoint.service.UserService;
+import com.example.gamepoint.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -26,12 +23,14 @@ public class ProfileController {
     private UserService userService;
     private GameService gameService;
     private SaleService saleService;
+    private RentGameService rentGameService;
 
     @GetMapping()
     private String getProfile(Model model){
         model.addAttribute("user", profileService.getActualUser());
         model.addAttribute("orders",profileService.getSales());
         model.addAttribute("games", userService.getGamesByActualUser());
+        model.addAttribute("rented",saleService.getSaleDetailsReturnedFalseAndUser());
         return "/profile";
     }
 
@@ -56,6 +55,7 @@ public class ProfileController {
     private String getOrder(@PathVariable int id, Model model){
         model.addAttribute("details", profileService.getSaleDetails(id));
         model.addAttribute("order",profileService.getSale(id));
+        model.addAttribute("rents",saleService.getRentGamesBySaleId(id));
         return "/order";
     }
 
@@ -65,9 +65,11 @@ public class ProfileController {
     }
 
     @PostMapping("/game/add")
-    private String postAddGame(GameDto gameDto){
-        gameService.addGame(gameDto);
-        return "/userAddGame";
+    private String postAddGame(GameDto gameDto, Model model){
+        int id = gameService.addGame(gameDto);
+        model.addAttribute("game", gameService.getGameById(id));
+        model.addAttribute("message","Game Created");
+        return "/userEditGame";
     }
 
     @GetMapping("/game/{id}")
@@ -80,6 +82,7 @@ public class ProfileController {
     private String postEditGame(@PathVariable int id,GameDto gameDto, Model model){
         gameService.updateGame(gameDto);
         model.addAttribute("game",gameService.getGameById(id));
+        model.addAttribute("message","Game Edited");
         return "/userEditGame";
     }
 
@@ -88,5 +91,16 @@ public class ProfileController {
         model.addAttribute("sales", saleService.getSaleDetailsByGameId(id));
         model.addAttribute("game",gameService.getGameById(id));
         return "/userSales";
+    }
+
+    @PostMapping("/return")
+    private String returnGame(int gameId, Model model){
+        rentGameService.returnGame(gameId);
+        model.addAttribute("user", profileService.getActualUser());
+        model.addAttribute("orders",profileService.getSales());
+        model.addAttribute("games", userService.getGamesByActualUser());
+        model.addAttribute("rented",saleService.getSaleDetailsReturnedFalseAndUser());
+        model.addAttribute("message","Game returned");
+        return "/profile";
     }
 }

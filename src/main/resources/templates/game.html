@@ -16,15 +16,37 @@
         <div class="col-sm-9 bg-steam rounded p-3">
             <h1 th:text="${game.name}"></h1>
             <p th:text="${game.desc}"></p>
-            <p>Stock: <span th:text="${game.stock}"></span></p>
-            <form th:if="${game.stock != 0}"th:action="@{/cart/add}" method="POST">
+            <div>Price: <span th:text="${game.price}"></span></div>
+            <div>Provider: <span th:text="${game.provider}"></span></div>
+            <div>Stock: <span th:text="${game.stock}"></span></div>
+            <form class="mt-2"th:if="${game.stock > 0}"th:action="@{/cart/add}" method="POST">
+                <h6>Add to cart to buy</h6>
                 <div class="row">
                     <input type="hidden" name="gameId" th:value="${game.id}">
                     <div class="col-sm-3 col-12">
-                        <input type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:max="${game.stock}" th:value="0" required>
+                        <label for="quantity">Quantity: </label>
+                        <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="0" th:max="${game.stock}" th:value="0" required>
+                    </div>
+                    <div class="col-sm-3 col-12 align-self-end">
+                        <button type="submit" class="btn btn-primary">Add To Cart</button>
+                    </div>
+                </div>
+            </form>
+
+            <form class="mt-2" th:if="${game.isForRent and game.stock > 0}" th:action="@{/rent/add}" method="POST">
+                <h6>Game available for rent for: $ <span th:text="${game.pricePerMonth}"></span> per month</h6>
+                <div class="row">
+                    <input type="hidden" name="gameId" th:value="${game.id}">
+                    <div class="col-sm-3 col-12">
+                        <label for="quantity2">Quantity: </label>
+                        <input id="quantity2"type="number" name="quantity" placeholder="Quantity" class="form-control" min="0" th:max="${game.stock}" th:value="0" required>
                     </div>
                     <div class="col-sm-3 col-12">
-                        <button type="submit" class="btn btn-primary">Add To Cart</button>
+                        <labe for="datefield">Day Of Return:</labe>
+                        <input id="datefield" type="date" name="finalMonth" placeholder="Select day of return" class="form-control" required>
+                    </div>
+                    <div class="col-sm-3 col-12 align-self-end">
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </div>
                 </div>
             </form>
@@ -33,5 +55,20 @@
 </div>
 
 <div th:replace="fragments/fragments :: footerfiles"></div>
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("datefield").setAttribute("min", today);
+</script>
 </body>
 </html>

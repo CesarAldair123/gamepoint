@@ -47,6 +47,24 @@
 </div>
 
 <div th:replace="fragments/fragments :: footerfiles"></div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script th:if="${message == 'User Created'}">
+    Swal.fire({
+        title: 'Success!',
+        text: 'User Created!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    })
+</script>
+<script th:if="${message == 'User Edited'}">
+    Swal.fire({
+        title: 'Success!',
+        text: 'User Updated!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    })
+</script>
 </body>
 
 </html>

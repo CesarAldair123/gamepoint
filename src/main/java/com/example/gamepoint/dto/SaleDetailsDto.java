@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class SaleDetailsDto {
     private int id;
     private int userId;
-    private String user;
+    private String username;
     private String gameImg;
     private String gameName;
     private int quantity;

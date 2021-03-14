@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @AllArgsConstructor
 @Controller
 public class AuthenticationController {
@@ -26,7 +28,12 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public String postSignup(SignupRequest signupRequest, Model model){
-        authenticationService.signup(signupRequest);
+        try{
+            authenticationService.signup(signupRequest);
+        }catch(Exception e){
+            model.addAttribute("message","Error");
+            return "/signup";
+        }
         model.addAttribute("message","Account Created Correctly, Login to enter");
         return "/login";
     }

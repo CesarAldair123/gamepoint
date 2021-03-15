@@ -125,7 +125,7 @@
                     <td th:text="${rent.lastMonth}"></td>
                     <td>
                         <form th:action="@{/profile/return}" method="POST">
-                            <input type="hidden" name="gameId" th:value="${rent.gameId}">
+                            <input type="hidden" name="gameId" th:value="${rent.id}">
                             <button type="submit" class="btn btn-primary">Return</button>
                         </form>
                     </td>

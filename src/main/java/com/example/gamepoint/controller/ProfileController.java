@@ -3,10 +3,8 @@ package com.example.gamepoint.controller;
 import com.example.gamepoint.dto.GameDto;
 import com.example.gamepoint.dto.UpdatePasswordRequest;
 import com.example.gamepoint.dto.UserDto;
-import com.example.gamepoint.model.Game;
 import com.example.gamepoint.service.*;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +28,7 @@ public class ProfileController {
         model.addAttribute("user", profileService.getActualUser());
         model.addAttribute("orders",profileService.getSales());
         model.addAttribute("games", userService.getGamesByActualUser());
-        model.addAttribute("rented",saleService.getSaleDetailsReturnedFalseAndUser());
+        model.addAttribute("rented",saleService.getRentGamesReturnedFalseAndUser());
         return "/profile";
     }
 
@@ -90,16 +88,18 @@ public class ProfileController {
     private String postEditGame(@PathVariable int id,Model model){
         model.addAttribute("sales", saleService.getSaleDetailsByGameId(id));
         model.addAttribute("game",gameService.getGameById(id));
+        model.addAttribute("rents",saleService.getRentGamesByGameId(id));
         return "/userSales";
     }
 
     @PostMapping("/return")
     private String returnGame(int gameId, Model model){
+        System.out.println(gameId);
         rentGameService.returnGame(gameId);
         model.addAttribute("user", profileService.getActualUser());
         model.addAttribute("orders",profileService.getSales());
         model.addAttribute("games", userService.getGamesByActualUser());
-        model.addAttribute("rented",saleService.getSaleDetailsReturnedFalseAndUser());
+        model.addAttribute("rented",saleService.getRentGamesReturnedFalseAndUser());
         model.addAttribute("message","Game returned");
         return "/profile";
     }

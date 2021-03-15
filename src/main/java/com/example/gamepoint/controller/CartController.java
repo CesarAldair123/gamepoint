@@ -52,6 +52,7 @@ public class CartController {
         }
         model.addAttribute("order", saleDto);
         model.addAttribute("details",saleService.getSalesDetailsBySaleId(saleDto.getId()));
+        model.addAttribute("rents",saleService.getRentGamesBySaleId(saleDto.getId()));
         return "/order";
     }
 }

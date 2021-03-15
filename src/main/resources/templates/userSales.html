@@ -32,6 +32,38 @@
             </tbody>
         </table>
     </div>
+
+    <div class="text-white mt-2">
+        <h3>Games Rented</h3>
+        <div class="table-responsive">
+            <table class="table table-dark">
+                <theader>
+                    <tr>
+                        <th>Img</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>First Day</th>
+                        <th>Last Day</th>
+                        <th>Returned</th>
+                    </tr>
+                </theader>
+                <tbody>
+                <tr th:each="rent: ${rents}">
+                    <td>
+                        <img th:src="@{${rent.gameImg}}" class="x40" th:alt="${rent.gameName}">
+                    </td>
+                    <td th:text="${rent.gameName}"></td>
+                    <td th:text="${rent.quantity}"></td>
+                    <td th:text="${rent.total}"></td>
+                    <td th:text="${rent.firstMonth}"></td>
+                    <td th:text="${rent.lastMonth}"></td>
+                    <td th:text="${rent.wasReturned ? 'Yes' : 'No'}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <div th:replace="fragments/fragments :: footerfiles"></div>

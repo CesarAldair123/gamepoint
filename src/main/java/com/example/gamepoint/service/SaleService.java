@@ -3,12 +3,10 @@ package com.example.gamepoint.service;
 import com.example.gamepoint.dto.RentGameDto;
 import com.example.gamepoint.dto.SaleDetailsDto;
 import com.example.gamepoint.dto.SaleDto;
+import com.example.gamepoint.model.Game;
 import com.example.gamepoint.model.RentGame;
 import com.example.gamepoint.model.User;
-import com.example.gamepoint.repository.RentGameRepository;
-import com.example.gamepoint.repository.SaleDetailsRepository;
-import com.example.gamepoint.repository.SaleRepository;
-import com.example.gamepoint.repository.UserRepository;
+import com.example.gamepoint.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,7 @@ public class SaleService {
     private SaleDetailsRepository saleDetailsRepository;
     private RentGameRepository rentGameRepository;
     private UserService userService;
+    private GameRepository gameRepository;
 
     @Transactional
     public List<SaleDto> getSalesByUserUsername(String username) {
@@ -112,7 +111,7 @@ public class SaleService {
     }
 
     @Transactional
-    public List<RentGameDto> getSaleDetailsReturnedFalseAndUser(){
+    public List<RentGameDto> getRentGamesReturnedFalseAndUser(){
         UserDetails user = userService.getActualUser();
         User u = userRepository.findByUsername(user.getUsername()).get();
         List<RentGame> rented =  rentGameRepository.findByQuery(u);
@@ -125,9 +124,28 @@ public class SaleService {
                                 .firstMonth(rentGame.getFirstMonth())
                                 .lastMonth(rentGame.getLasthMonth())
                                 .gameId(rentGame.getGame().getId())
-                                //.wasReturned(rentGame.getWasReturned() == 1 ? true : false)
+                                .wasReturned(rentGame.getWasReturned() == 1 ? true : false)
                                 .gameName(rentGame.getGame().getName())
                                 .build())
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<RentGameDto> getRentGamesByGameId(int gameId){
+        Game game = gameRepository.findById(gameId).get();
+        List<RentGame> rented =  rentGameRepository.findRentGamesByGame(game);
+        return rented.stream().map(rentGame ->
+                RentGameDto.builder()
+                        .id(rentGame.getId())
+                        .gameImg(rentGame.getGame().getImgUrl())
+                        .quantity(rentGame.getQuantity())
+                        .total(rentGame.getTotal())
+                        .firstMonth(rentGame.getFirstMonth())
+                        .lastMonth(rentGame.getLasthMonth())
+                        .gameId(rentGame.getGame().getId())
+                        .wasReturned(rentGame.getWasReturned() == 1 ? true : false)
+                        .gameName(rentGame.getGame().getName())
+                        .build())
                 .collect(Collectors.toList());
     }
 }

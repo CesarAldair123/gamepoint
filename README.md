@@ -1,4 +1,4 @@
-# gamepoint
+# Gamepoint
 Proyecto De Temas Selectos De Optimizacion  
 Maestro: Guadalupe Trujillo Sanchez  
 Materia: Temas Selectos de Optimizacion  

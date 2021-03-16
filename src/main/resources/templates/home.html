@@ -13,7 +13,7 @@
         <div th:each="game: ${games}" class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mt-3">
             <a class="text-decoration-none" th:href="@{/game/{id}(id=${game.id})}">
                 <div class="card bg-void" style="height:100%;">
-                    <img th:src="@{${game.imgUrl}}" class="card-img-top" height="350px" th:alt="${game.name}">
+                    <img th:src="@{${game.imgUrl}}" class="card-img-top fixed-size" height="350px" th:alt="${game.name}">
                     <div class="card-body bg-steam text-white" style="font-size: small">
                         <h5 class="card-title" th:text="${game.name}"></h5>
                         <div class="card-text">Developer: <span th:text="${game.devName}"></span></div>

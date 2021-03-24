@@ -13,7 +13,7 @@ Gamepoint es una tienda de videojuegos digital de compra-venta y tambien renta
 ## Como correr la aplicacion
 Abrir una terminal o consola en la raiz de el proyecto y correr el siguiente comando:  
 Linux: ./mvnw spring-boot:run  
-Windows: .\mvnw spring-boot:run
+Windows: .\mvnw spring-boot:run  
 Despues abrir en un navegador el url: localhost:8080/
 
 ## Imagenes
